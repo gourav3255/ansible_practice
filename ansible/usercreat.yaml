@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  remote_user: ansi
+  gather_facts: no
+  tasks:
+    - name: adding user to group
+      become: yes
+      user:
+        name: test_user
+        groups: admin
+        append: yes
+        password: "{{'#$!56^&SD' | password_hash('sha512') }}"
+        state: absent

@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  remote_user: ansi
+  gather_facts: no
+
+
+  tasks:
+    - name: Install Git repo
+      become: yes
+      shell: "yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y"
+              
+    - name: git upgrade
+      shell: "yum upgrade git -y"

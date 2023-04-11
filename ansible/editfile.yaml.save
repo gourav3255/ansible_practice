@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  remote_user: ansi
+  gather_facts: no
+
+
+  tasks:
+    - name: Editing  file in each server 
+      become: yes
+      shell: "sed -i 's/Server=172.31.48.41/Server=172.31.48.41,10.160.10.53/g' /etc/zabbix/zabbix_agentd.conf"
+              
+    - name: Print file contents
+    
+  vars:
+    file_path: /etc/zabbix/zabbix_agentd.conf
+  tasks:
+    - name: Read file contents
+      shell: grep Server=  '{{ file_path }}'
+      register: file_contents
+      
+
+    - name: Display file contents
+      debug:
+        var: file_contents.stdout_lines 
+  
